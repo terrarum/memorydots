@@ -1,6 +1,6 @@
-import loop from './modules/loop';
-
 import './index.scss'; // eslint-disable-line
+
+import loop from './modules/loop';
 
 const btnClear = document.getElementsByClassName('js-clear')[0];
 const btnSimple = document.getElementsByClassName('js-simple')[0];
@@ -43,6 +43,7 @@ const init = function init() {
   btnRunToggle.addEventListener('click', runToggle);
 
   createSimple();
+  loop.init();
 };
 
 init();
