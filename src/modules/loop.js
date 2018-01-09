@@ -1,19 +1,15 @@
 // let lastTimestamp = 0;
 let running = true;
 
-const canvasEl = document.getElementsByClassName('js-canvas')[0];
-
-let canvas = null;
-let ctx = null;
-
 const options = {
+  ctx: null,
   update: null,
   render: null,
 };
 
 const loop = function loop() {
   if (running) {
-    options.update();
+    options.update(1);
   }
   options.render();
 
@@ -28,13 +24,13 @@ const resume = function resume() {
   running = true;
 };
 
-const init = function init(update, render) {
+const init = function init(update, render, ctx) {
+  options.ctx = ctx;
   options.update = update;
   options.render = render;
 
   // Set up the canvas.
-  ctx = canvasEl.getContext('2d');
-  canvas = ctx.canvas;
+  const canvas = ctx.canvas;
 
   canvas.width = 800;
   canvas.height = 600;

@@ -12,6 +12,8 @@ const $status = document.getElementsByClassName('js-status')[0];
 
 const DOT_COUNT = 10000;
 let dots = [];
+const canvasEl = document.getElementsByClassName('js-canvas')[0];
+let ctx = null;
 
 // Clear all dots.
 const clear = function clear() {
@@ -22,7 +24,7 @@ const clear = function clear() {
 // Rebuild using dots with their own functions.
 const createSimple = function createSimple() {
   $status.innerHTML = 'Simple Dots';
-  dots = simpleDot.create(DOT_COUNT);
+  dots = simpleDot.create(DOT_COUNT, ctx);
 };
 
 // Rebuild using dots with inheritance.
@@ -46,24 +48,31 @@ const runToggle = function runToggle() {
 // Update dot positions.
 const update = function update(dt) {
   dots.forEach((dot) => {
-    dot.updatePosition(dt);
+    dot.updatePosition(dt, ctx);
   });
 };
 
 // Render the dots.
 const render = function render() {
-
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  dots.forEach((dot) => {
+    ctx.fillRect(dot.x, dot.y, 5, 5);
+  });
 };
 
 // Set up button listeners and start simple dots.
 const init = function init() {
+  ctx = canvasEl.getContext('2d');
+  ctx.canvas.width = 800;
+  ctx.canvas.height = 600;
+
   btnClear.addEventListener('click', clear);
   btnSimple.addEventListener('click', createSimple);
   btnInherit.addEventListener('click', createInherit);
   btnRunToggle.addEventListener('click', runToggle);
 
   createSimple();
-  loop.init(update, render);
+  loop.init(update, render, ctx);
 };
 
 init();
