@@ -11,9 +11,10 @@ const btnRunToggle = document.getElementsByClassName('js-runtoggle')[0];
 const $status = document.getElementsByClassName('js-status')[0];
 
 const DOT_COUNT = 10000;
-let dots = [];
 const canvasEl = document.getElementsByClassName('js-canvas')[0];
 let ctx = null;
+let dots = [];
+let isSimple = true;
 
 // Clear all dots.
 const clear = function clear() {
@@ -24,13 +25,15 @@ const clear = function clear() {
 // Rebuild using dots with their own functions.
 const createSimple = function createSimple() {
   $status.innerHTML = 'Simple Dots';
+  isSimple = true;
   dots = simpleDot.create(DOT_COUNT, ctx);
 };
 
 // Rebuild using dots with inheritance.
 const createInherit = function createInherit() {
   $status.innerHTML = 'Inherited Dots';
-  dots = inheritDot.create(DOT_COUNT);
+  isSimple = false;
+  dots = inheritDot.create(DOT_COUNT, ctx);
 };
 
 // Toggle the run status of the loop.
@@ -56,6 +59,30 @@ const update = function update(dt) {
 const render = function render() {
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   dots.forEach((dot) => {
+    let dotXP = dot.x / ctx.canvas.width;
+    let dotYP = dot.y / ctx.canvas.height;
+    dotXP = dotXP < 0.1 ? 0.1 : dotXP;
+    dotXP = dotXP > 0.8 ? 0.8 : dotXP;
+    dotYP = dotYP < 0.1 ? 0.1 : dotYP;
+    dotYP = dotYP > 0.8 ? 0.8 : dotYP;
+
+    let r = null;
+    let g = null;
+    let b = null;
+
+    if (isSimple) {
+      r = Math.round(255 * dotXP);
+      g = Math.round(255 * ((dotYP + dotXP) / 2));
+      b = Math.round(255 * dotYP);
+    }
+    else {
+      r = Math.round(255 * dotYP);
+      g = Math.round(255 * ((dotYP + dotXP) / 2));
+      b = Math.round(255 * dotXP);
+    }
+    const rgb = `rgb(${r}, ${g}, ${b})`;
+
+    ctx.fillStyle = rgb;
     ctx.fillRect(dot.x, dot.y, 5, 5);
   });
 };

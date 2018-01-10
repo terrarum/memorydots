@@ -4,11 +4,11 @@ export default function updatePosition(dt, ctx) {
   let newX = this.x + _.random(-1, 1);
   let newY = this.y + _.random(-1, 1);
 
-  newX = newX < 0 ? ctx.canvas.width : newX;
-  newX = newX > ctx.canvas.width ? 0 : newX;
+  newX = newX < -5 ? ctx.canvas.width + 5 : newX;
+  newX = newX > ctx.canvas.width + 5 ? -5 : newX;
 
-  newY = newY < 0 ? ctx.canvas.height : newY;
-  newY = newY > ctx.canvas.height ? 0 : newY;
+  newY = newY < -5 ? ctx.canvas.height + 5 : newY;
+  newY = newY > ctx.canvas.height + 5 ? -5 : newY;
 
   this.x = newX;
   this.y = newY;
