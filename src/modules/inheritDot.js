@@ -4,10 +4,10 @@ import updatePosition from './updatePosition';
 const CreateDot = function createDot(ctx) {
   this.x = _.random(10, ctx.canvas.width - 10);
   this.y = _.random(10, ctx.canvas.height - 10);
-  this.updatePosition = updatePosition;
+  // this.updatePosition = updatePosition;
 };
 
-// CreateDot.prototype.updatePosition = updatePosition;
+CreateDot.prototype.updatePosition = updatePosition;
 
 const create = function create(count, ctx) {
   const dots = [];
