@@ -1,8 +1,8 @@
 import './index.scss'; // eslint-disable-line
 
 import loop from './modules/loop';
-import simpleDot from './modules/simpleDot';
-import inheritDot from './modules/inheritDot';
+import SimpleDot from './modules/simpleDot';
+import InheritDot from './modules/inheritDot';
 
 const btnClear = document.getElementsByClassName('js-clear')[0];
 const btnSimple = document.getElementsByClassName('js-simple')[0];
@@ -26,14 +26,24 @@ const clear = function clear() {
 const createSimple = function createSimple() {
   $status.innerHTML = 'Simple Dots';
   isSimple = true;
-  dots = simpleDot.create(DOT_COUNT, ctx);
+  dots = [];
+
+  for (let i = 0; i < DOT_COUNT; i += 1) {
+    const dot = new SimpleDot(ctx);
+    dots.push(dot);
+  }
 };
 
 // Rebuild using dots with inheritance.
 const createInherit = function createInherit() {
   $status.innerHTML = 'Inherited Dots';
   isSimple = false;
-  dots = inheritDot.create(DOT_COUNT, ctx);
+  dots = [];
+
+  for (let i = 0; i < DOT_COUNT; i += 1) {
+    const dot = new InheritDot(ctx);
+    dots.push(dot);
+  }
 };
 
 // Toggle the run status of the loop.
