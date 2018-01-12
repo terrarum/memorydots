@@ -2,8 +2,8 @@ import _ from 'lodash';
 import updatePosition from './updatePosition';
 
 const InheritDot = function InheritDot(ctx) {
-  this.x = _.random(10, ctx.canvas.width - 10);
-  this.y = _.random(10, ctx.canvas.height - 10);
+  this.x = _.random(0, ctx.canvas.width);
+  this.y = _.random(0, ctx.canvas.height);
 };
 
 InheritDot.prototype.updatePosition = updatePosition;

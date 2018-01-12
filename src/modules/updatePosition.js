@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-export default function updatePosition(dt, ctx) {
+export default function updatePosition(ctx) {
   let newX = this.x + _.random(-1, 1);
   let newY = this.y + _.random(-1, 1);
 

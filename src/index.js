@@ -4,21 +4,30 @@ import loop from './modules/loop';
 import SimpleDot from './modules/simpleDot';
 import InheritDot from './modules/inheritDot';
 
+const inputDotCount = document.getElementsByClassName('js-dot-count')[0];
 const btnClear = document.getElementsByClassName('js-clear')[0];
 const btnSimple = document.getElementsByClassName('js-simple')[0];
 const btnInherit = document.getElementsByClassName('js-inherit')[0];
 const btnRunToggle = document.getElementsByClassName('js-runtoggle')[0];
 const $status = document.getElementsByClassName('js-status')[0];
 
-const DOT_COUNT = 10000;
 const canvasEl = document.getElementsByClassName('js-canvas')[0];
 let ctx = null;
 let dots = [];
 let isSimple = true;
 
+const clampDotRange = function clampDotRange() {
+  const maxDots = parseInt(inputDotCount.max, 10);
+  inputDotCount.value = inputDotCount.value > maxDots ? maxDots : inputDotCount.value;
+};
+
+inputDotCount.addEventListener('change', () => {
+  clampDotRange();
+});
+
 // Clear all dots.
 const clear = function clear() {
-  $status.innerHTML = '';
+  $status.innerHTML = 'No Dots';
   dots = [];
 };
 
@@ -27,8 +36,9 @@ const createSimple = function createSimple() {
   $status.innerHTML = 'Simple Dots';
   isSimple = true;
   dots = [];
+  const dotCount = inputDotCount.value;
 
-  for (let i = 0; i < DOT_COUNT; i += 1) {
+  for (let i = 0; i < dotCount; i += 1) {
     const dot = new SimpleDot(ctx);
     dots.push(dot);
   }
@@ -39,8 +49,9 @@ const createInherit = function createInherit() {
   $status.innerHTML = 'Inherited Dots';
   isSimple = false;
   dots = [];
+  const dotCount = inputDotCount.value;
 
-  for (let i = 0; i < DOT_COUNT; i += 1) {
+  for (let i = 0; i < dotCount; i += 1) {
     const dot = new InheritDot(ctx);
     dots.push(dot);
   }
@@ -59,9 +70,9 @@ const runToggle = function runToggle() {
 };
 
 // Update dot positions.
-const update = function update(dt) {
+const update = function update() {
   dots.forEach((dot) => {
-    dot.updatePosition(dt, ctx);
+    dot.updatePosition(ctx);
   });
 };
 
@@ -83,7 +94,7 @@ const render = function render() {
     if (isSimple) {
       r = Math.round(255 * dotXP);
       g = Math.round(255 * ((dotYP + dotXP) / 2));
-      b = Math.round(255 * dotYP);
+      b = Math.round(255 * (1 - dotYP));
     }
     else {
       r = Math.round(255 * dotYP);

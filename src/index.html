@@ -7,15 +7,12 @@
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
-  <div class="header">
-    <p>title</p>
-  </div>
-
   <div class="canvas-container">
     <canvas class="canvas js-canvas"></canvas>
   </div>
 
   <div class="buttons">
+    <input type="number" class="js-dot-count dot-count" min="0" max="200000" value="10000">
     <button class="js-clear">Clear Dots</button>
     <button class="js-simple">Create Simple</button>
     <button class="js-inherit">Create Inherit</button>
@@ -24,7 +21,7 @@
 
   <div class="feedback">
     <div class="js-status"></div>
-    <div class="js-framerate"></div>
+    <div class="js-stats stats"></div>
   </div>
 </body>
 </html>

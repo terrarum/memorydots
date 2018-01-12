@@ -3,8 +3,8 @@ import updatePosition from './updatePosition';
 
 const SimpleDot = function SimpleDot(ctx) {
   const dot = {
-    x: _.random(10, ctx.canvas.width - 10),
-    y: _.random(10, ctx.canvas.height - 10),
+    x: _.random(0, ctx.canvas.width),
+    y: _.random(0, ctx.canvas.height),
     updatePosition,
   };
 

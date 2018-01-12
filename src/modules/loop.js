@@ -1,5 +1,5 @@
-// let lastTimestamp = 0;
 let running = true;
+const $stats = document.getElementsByClassName('js-stats')[0];
 
 const options = {
   ctx: null,
@@ -7,12 +7,18 @@ const options = {
   render: null,
 };
 
-const loop = function loop() {
-  if (running) {
-    options.update(1);
-  }
-  options.render();
+let lastTimestamp = 0;
+let duration = 0;
+const loop = function loop(timestamp) {
+  duration = timestamp - lastTimestamp;
+  lastTimestamp = timestamp;
 
+  if (running) {
+    options.update();
+    options.render();
+  }
+
+  $stats.innerHTML = `${(1000 / duration).toFixed(0)}fps<br>${duration.toFixed(2)}ms`;
   window.requestAnimationFrame(loop);
 };
 

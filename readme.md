@@ -7,7 +7,6 @@ Things to talk about:
 https://www.codeproject.com/Articles/687093/Understanding-JavaScript-Object-Creation-Patterns
 
 
-
 Demonstrate how to measure RAM usage
   Is there any kind of breakdown that's useful?
   Can we see which bits make up the difference between each version?
