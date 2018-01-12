@@ -72,7 +72,7 @@ const runToggle = function runToggle() {
 // Update dot positions.
 const update = function update() {
   dots.forEach((dot) => {
-    dot.updatePosition(ctx);
+    dot.updatePosition(ctx, isSimple);
   });
 };
 
@@ -101,9 +101,8 @@ const render = function render() {
       g = Math.round(255 * ((dotYP + dotXP) / 2));
       b = Math.round(255 * dotXP);
     }
-    const rgb = `rgb(${r}, ${g}, ${b})`;
 
-    ctx.fillStyle = rgb;
+    ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
     ctx.fillRect(dot.x, dot.y, 5, 5);
   });
 };
@@ -119,7 +118,7 @@ const init = function init() {
   btnInherit.addEventListener('click', createInherit);
   btnRunToggle.addEventListener('click', runToggle);
 
-  createSimple();
+  // createSimple();
   loop.init(update, render, ctx);
 };
 
