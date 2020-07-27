@@ -1,20 +1,22 @@
-import './index.scss'; // eslint-disable-line
+import './index.scss';
 
 import loop from './modules/loop';
 import SimpleDot from './modules/simpleDot';
 import InheritDot from './modules/inheritDot';
+import ClassDot from './modules/classDot';
 
 const inputDotCount = document.getElementsByClassName('js-dot-count')[0];
 const btnClear = document.getElementsByClassName('js-clear')[0];
 const btnSimple = document.getElementsByClassName('js-simple')[0];
 const btnInherit = document.getElementsByClassName('js-inherit')[0];
+const btnClass = document.getElementsByClassName('js-class')[0];
 const btnRunToggle = document.getElementsByClassName('js-runtoggle')[0];
 const $status = document.getElementsByClassName('js-status')[0];
 
 const canvasEl = document.getElementsByClassName('js-canvas')[0];
 let ctx = null;
 let dots = [];
-let isSimple = true;
+let type = null;
 
 const clampDotRange = function clampDotRange() {
   const maxDots = parseInt(inputDotCount.max, 10);
@@ -34,7 +36,7 @@ const clear = function clear() {
 // Rebuild using dots with their own functions.
 const createSimple = function createSimple() {
   $status.innerHTML = 'Simple Dots';
-  isSimple = true;
+  type = 'simple';
   dots = [];
   const dotCount = inputDotCount.value;
 
@@ -47,12 +49,25 @@ const createSimple = function createSimple() {
 // Rebuild using dots with inheritance.
 const createInherit = function createInherit() {
   $status.innerHTML = 'Inherited Dots';
-  isSimple = false;
+  type = 'inherit';
   dots = [];
   const dotCount = inputDotCount.value;
 
   for (let i = 0; i < dotCount; i += 1) {
     const dot = new InheritDot(ctx);
+    dots.push(dot);
+  }
+};
+
+// Rebuild using dots with inheritance.
+const createClass = function createClass() {
+  $status.innerHTML = 'Class Dots';
+  type = 'class';
+  dots = [];
+  const dotCount = inputDotCount.value;
+
+  for (let i = 0; i < dotCount; i += 1) {
+    const dot = new ClassDot(ctx);
     dots.push(dot);
   }
 };
@@ -72,7 +87,7 @@ const runToggle = function runToggle() {
 // Update dot positions.
 const update = function update() {
   dots.forEach((dot) => {
-    dot.updatePosition(ctx, isSimple);
+    dot.updatePosition(ctx, type);
   });
 };
 
@@ -91,15 +106,24 @@ const render = function render() {
     let g = null;
     let b = null;
 
-    if (isSimple) {
-      r = Math.round(255 * dotXP);
-      g = Math.round(255 * ((dotYP + dotXP) / 2));
-      b = Math.round(255 * (1 - dotYP));
-    }
-    else {
-      r = Math.round(255 * dotYP);
-      g = Math.round(255 * ((dotYP + dotXP) / 2));
-      b = Math.round(255 * dotXP);
+    switch (type) {
+      case 'simple':
+        r = Math.round(255 * dotXP);
+        g = Math.round(255 * ((dotYP + dotXP) / 2));
+        b = Math.round(255 * (1 - dotYP));
+        break;
+      case 'inherit':
+        r = Math.round(255 * dotYP);
+        g = Math.round(255 * ((dotYP + dotXP) / 2));
+        b = Math.round(255 * dotXP);
+        break;
+      case 'class':
+        r = Math.round(255 * ((dotYP + dotXP) / 2));
+        g = Math.round(255 * dotXP);
+        b = Math.round(255 * (1 - dotYP));
+        break;
+      default:
+        throw new Error('Uh oh');
     }
 
     ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
@@ -116,6 +140,7 @@ const init = function init() {
   btnClear.addEventListener('click', clear);
   btnSimple.addEventListener('click', createSimple);
   btnInherit.addEventListener('click', createInherit);
+  btnClass.addEventListener('click', createClass);
   btnRunToggle.addEventListener('click', runToggle);
 
   // createSimple();
