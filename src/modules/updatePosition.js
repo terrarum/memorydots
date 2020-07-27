@@ -1,8 +1,8 @@
-import _ from 'lodash';
+import random from 'lodash.random';
 
 export default function updatePosition(ctx) {
-  let newX = this.x + _.random(-1, 1);
-  let newY = this.y + _.random(-1, 1);
+  let newX = this.x + random(-1, 1);
+  let newY = this.y + random(-1, 1);
 
   newX = newX < -5 ? ctx.canvas.width + 5 : newX;
   newX = newX > ctx.canvas.width + 5 ? -5 : newX;
