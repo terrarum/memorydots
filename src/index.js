@@ -59,7 +59,7 @@ const createInherit = function createInherit() {
   }
 };
 
-// Rebuild using dots with inheritance.
+// Rebuild using dots with classes.
 const createClass = function createClass() {
   $status.innerHTML = 'Class Dots';
   type = 'class';
