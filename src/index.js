@@ -11,7 +11,7 @@ const btnSimple = document.getElementsByClassName('js-simple')[0];
 const btnInherit = document.getElementsByClassName('js-inherit')[0];
 const btnClass = document.getElementsByClassName('js-class')[0];
 const btnRunToggle = document.getElementsByClassName('js-runtoggle')[0];
-const $status = document.getElementsByClassName('js-status')[0];
+const status = document.getElementsByClassName('js-status')[0];
 
 const canvasEl = document.getElementsByClassName('js-canvas')[0];
 let ctx = null;
@@ -29,16 +29,17 @@ inputDotCount.addEventListener('change', () => {
 
 // Clear all dots.
 const clear = function clear() {
-  $status.innerHTML = 'No Dots';
+  status.innerHTML = 'No Dots';
   dots = [];
 };
 
 // Rebuild using dots with their own functions.
 const createSimple = function createSimple() {
-  $status.innerHTML = 'Simple Dots';
+  const dotCount = inputDotCount.value;
+  const dotCountDisplay = new Intl.NumberFormat('en-GB').format(dotCount);
+  status.innerHTML = `${dotCountDisplay} Simple Dots`;
   type = 'simple';
   dots = [];
-  const dotCount = inputDotCount.value;
 
   for (let i = 0; i < dotCount; i += 1) {
     const dot = new SimpleDot(ctx);
@@ -48,10 +49,11 @@ const createSimple = function createSimple() {
 
 // Rebuild using dots with inheritance.
 const createInherit = function createInherit() {
-  $status.innerHTML = 'Inherited Dots';
+  const dotCount = inputDotCount.value;
+  const dotCountDisplay = new Intl.NumberFormat('en-GB').format(dotCount);
+  status.innerHTML = `${dotCountDisplay} Inherited Dots`;
   type = 'inherit';
   dots = [];
-  const dotCount = inputDotCount.value;
 
   for (let i = 0; i < dotCount; i += 1) {
     const dot = new InheritDot(ctx);
@@ -61,10 +63,11 @@ const createInherit = function createInherit() {
 
 // Rebuild using dots with classes.
 const createClass = function createClass() {
-  $status.innerHTML = 'Class Dots';
+  const dotCount = inputDotCount.value;
+  const dotCountDisplay = new Intl.NumberFormat('en-GB').format(dotCount);
+  status.innerHTML = `${dotCountDisplay} Class Dots`;
   type = 'class';
   dots = [];
-  const dotCount = inputDotCount.value;
 
   for (let i = 0; i < dotCount; i += 1) {
     const dot = new ClassDot(ctx);
