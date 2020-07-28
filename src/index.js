@@ -143,7 +143,7 @@ const init = function init() {
   btnClass.addEventListener('click', createClass);
   btnRunToggle.addEventListener('click', runToggle);
 
-  // createSimple();
+  createSimple();
   loop.init(update, render, ctx);
 };
 
