@@ -2,16 +2,18 @@ import random from 'lodash.random';
 
 class Dot {
   updatePosition(ctx) {
-    const gutterSize = 5;
+    const gutter = 5;
+    const canvasWidth = ctx.canvas.width + gutter;
+    const canvasHeight = ctx.canvas.height + gutter;
 
     let newX = this.x + random(-1, 1);
     let newY = this.y + random(-1, 1);
 
-    newX = newX < -gutterSize ? ctx.canvas.width + gutterSize : newX;
-    newX = newX > ctx.canvas.width + gutterSize ? -gutterSize : newX;
+    newX = newX < -gutter ? canvasWidth : newX;
+    newX = newX > canvasWidth ? -gutter : newX;
 
-    newY = newY < -gutterSize ? ctx.canvas.height + gutterSize : newY;
-    newY = newY > ctx.canvas.height + gutterSize ? -gutterSize : newY;
+    newY = newY < -gutter ? canvasHeight : newY;
+    newY = newY > canvasHeight ? -gutter : newY;
 
     this.x = newX;
     this.y = newY;
