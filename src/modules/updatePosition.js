@@ -1,11 +1,6 @@
 import random from 'lodash.random';
 
-function InheritDot(ctx) {
-  this.x = random(0, ctx.canvas.width);
-  this.y = random(0, ctx.canvas.height);
-}
-
-InheritDot.prototype.updatePosition = function updatePosition(ctx) {
+export default function updatePosition(ctx) {
   const gutter = 5;
   const canvasWidth = ctx.canvas.width + gutter;
   const canvasHeight = ctx.canvas.height + gutter;
@@ -21,6 +16,4 @@ InheritDot.prototype.updatePosition = function updatePosition(ctx) {
 
   this.x = newX;
   this.y = newY;
-};
-
-export default InheritDot;
+}

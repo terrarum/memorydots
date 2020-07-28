@@ -12,6 +12,7 @@ const btnInherit = document.getElementsByClassName('js-inherit')[0];
 const btnClass = document.getElementsByClassName('js-class')[0];
 const btnRunToggle = document.getElementsByClassName('js-runtoggle')[0];
 const status = document.getElementsByClassName('js-status')[0];
+let oldStatus = '';
 
 const canvasEl = document.getElementsByClassName('js-canvas')[0];
 let ctx = null;
@@ -29,6 +30,7 @@ inputDotCount.addEventListener('change', () => {
 
 // Clear all dots.
 const clear = function clear() {
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   status.innerHTML = 'No Dots';
   dots = [];
 };
@@ -45,6 +47,8 @@ const createSimple = function createSimple() {
     const dot = new SimpleDot(ctx);
     dots.push(dot);
   }
+  // eslint-disable-next-line no-console
+  console.log(dots[0]);
 };
 
 // Rebuild using dots with inheritance.
@@ -59,6 +63,8 @@ const createInherit = function createInherit() {
     const dot = new InheritDot(ctx);
     dots.push(dot);
   }
+  // eslint-disable-next-line no-console
+  console.log(dots[0]);
 };
 
 // Rebuild using dots with classes.
@@ -73,16 +79,21 @@ const createClass = function createClass() {
     const dot = new ClassDot(ctx);
     dots.push(dot);
   }
+  // eslint-disable-next-line no-console
+  console.log(dots[0]);
 };
 
 // Toggle the run status of the loop.
 const runToggle = function runToggle() {
   if (btnRunToggle.innerHTML === 'Pause') {
     loop.pause();
+    oldStatus = status.innerHTML;
+    status.innerHTML += ' - PAUSED';
     btnRunToggle.innerHTML = 'Resume';
   }
   else if (btnRunToggle.innerHTML === 'Resume') {
     loop.resume();
+    status.innerHTML = oldStatus;
     btnRunToggle.innerHTML = 'Pause';
   }
 };
